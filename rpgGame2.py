@@ -101,10 +101,21 @@ class Shadow(Character):
         dodge = random.random() > .1
         if dodge:
             print("%s dodged the attack" % (self.name))
-            enemy.power = 0
+        else:
             super(Shadow, self).receive_damage(points)
-        if dodge:
-            enemy.power = enemy.power
+# make a Zombie character that doesn't die even if his health is below zero
+class Zombie(Character):
+    def __init__(self):
+        self.name = 'zombie'
+        self.health = 1
+        self.power = 1
+    def alive(self):
+        return self.health
+    def receive_damage(self,points):
+        self.health -= points
+        print("%s received %d damage." % (self.name, points))
+        
+    
 
 class Battle(object):
     def do_battle(self, hero, enemy):
@@ -179,8 +190,8 @@ class Store(object):
                 hero.buy(item)
 
 hero = Hero()
-enemies = [Shadow()]
-# enemies = [Goblin(), Wizard(), Medic(), Shadow()]
+enemies = [Zombie()]
+# enemies = [Goblin(), Wizard(), Medic(), Shadow(), Zombie()]
 battle_engine = Battle()
 shopping_engine = Store()
 
