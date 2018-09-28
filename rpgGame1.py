@@ -25,6 +25,8 @@ class Character:
     def attack(self, enemy):
         enemy.health -= self.power
         print("The %s does %d damage to the %s." % (self.name, self.power, enemy.name))
+        # if enemy.alive() == True :
+        #     print("The %s is dead" % (enemy.name))
         if enemy.health <= 0:
             print("The %s is dead" % (enemy.name))
 
@@ -75,10 +77,19 @@ class Zombie(Character):
     def __init__(self):
         self.name = 'Zombie'
         self.power = 1
+        self.health = 1
+
+    def alive(self):
+        while self.health:
+            return
+
+
+        
     
 
 kyle = Hero()
 enemy1 = Goblin()
+enemy2 = Zombie()
 
 while kyle.health > 0 and enemy1.health > 0:
     kyle.print_status()
@@ -87,6 +98,6 @@ while kyle.health > 0 and enemy1.health > 0:
     kyle.attack(enemy1)
     kyle.alive()
     enemy1.alive()
-
+kyle.attack(enemy2)
 
     

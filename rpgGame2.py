@@ -30,6 +30,13 @@ class Character(object):
     def print_status(self):
         print("%s has %d health and %d power." % (self.name, self.health, self.power))
 
+# Give each enemy a bounty. For example, the prize for defeating the Goblin is 5 coins, for the Wizard it is 6 coins.
+    # def bounty(self, enemy):
+    #     if not self.alive():
+    #         return
+    #     if enemy.health <= 0:
+    #         self.coins += enemy.coins
+
 class Hero(Character):
     def __init__(self):
         self.name = 'hero'
@@ -62,12 +69,14 @@ class Goblin(Character):
         self.name = 'goblin'
         self.health = 6
         self.power = 2
+        self.coins = 5
 
 class Wizard(Character):
     def __init__(self):
         self.name = 'wizard'
         self.health = 8
         self.power = 1
+        self.coins = 6
 
     def attack(self, enemy):
         swap_power = random.random() > 0.5
@@ -84,6 +93,8 @@ class Medic(Character):
         self.name = 'medic'
         self.health = 10
         self.power = 1
+        self.coins = 7
+
     def receive_damage(self, points):
         extra_health = random.random() > .8
         super(Medic, self).receive_damage(points)
@@ -97,6 +108,8 @@ class Shadow(Character):
         self.name = 'shadow'
         self.health = 1
         self.power = 1
+        self.coins = 8
+
     def receive_damage(self, points):
         dodge = random.random() > .1
         if dodge:
@@ -109,8 +122,11 @@ class Zombie(Character):
         self.name = 'zombie'
         self.health = 1
         self.power = 1
+        self.coins = 100
+
     def alive(self):
         return self.health
+
     def receive_damage(self,points):
         self.health -= points
         print("%s received %d damage." % (self.name, points))
@@ -190,8 +206,8 @@ class Store(object):
                 hero.buy(item)
 
 hero = Hero()
-enemies = [Zombie()]
-# enemies = [Goblin(), Wizard(), Medic(), Shadow(), Zombie()]
+# enemies = [Zombie()]
+enemies = [Goblin(), Wizard(), Medic(), Shadow()]
 battle_engine = Battle()
 shopping_engine = Store()
 
